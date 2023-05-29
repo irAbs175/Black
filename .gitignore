@@ -34,7 +34,6 @@ pkginfo/
 
 # Database files
 *.sqlite3
-*.db
 
 
 # Other files and directories
