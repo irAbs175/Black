@@ -20,7 +20,7 @@ ENV LC_ALL fa_IR.UTF-8
 COPY . .
 
 # Install project dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Create a virtual environment
 RUN python -m venv venv
@@ -30,7 +30,7 @@ SHELL ["/bin/bash", "-c"]
 RUN source venv/bin/activate
 
 # Run migrations
-RUN python3 manage.py makemigrations --empty index && python3 manage.py makemigrations --empty blog && python3 manage.py makemigrations --empty product && python3 manage.py makemigrations --empty category && python3 manage.py makemigrations index && python3 manage.py makemigrations blog && python3 manage.py makemigrations category && python3 manage.py makemigrations users && python3 manage.py makemigrations product
+RUN python3 manage.py makemigrations --empty index && python3 manage.py makemigrations --empty users && python3 manage.py makemigrations --empty product && python3 manage.py makemigrations --empty blog && python3 manage.py makemigrations index && python3 manage.py makemigrations users && python3 manage.py makemigrations product && python3 manage.py makemigrations blog
 RUN python3 manage.py migrate
 
 # Create a superuser
