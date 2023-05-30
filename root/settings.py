@@ -59,7 +59,7 @@ INSTALLED_APPS = [
 
     # Internal apps
     'index',
-    'users',
+    'user_accounts',
     'blog',
     'product',
 ]
@@ -128,7 +128,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # User authenticate model
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'user_accounts.user_accounts'
 
 # WAGTAIL FRONTEND LOGIN TEMPLATE
 WAGTAIL_FRONTEND_LOGIN_TEMPLATE = 'accounts/login.html'
@@ -362,12 +362,12 @@ SOCIALACCOUNT_PROVIDERS = {
 ACCOUNT_FORMS = {
     ''' PLEASE KEEP THIS FILE SAFE !  '''
     'add_email': 'allauth.account.forms.AddEmailForm',
-    'change_password': 'users.forms.CustomPasswordChangeForm',
+    'change_password': 'user_accounts.forms.CustomPasswordChangeForm',
     'disconnect': 'allauth.socialaccount.forms.DisconnectForm',
     'reset_password': 'allauth.account.forms.ResetPasswordForm',
     'reset_password_from_key': 'allauth.account.forms.ResetPasswordKeyForm',
     'set_password': 'allauth.account.forms.SetPasswordForm',
-    'signup': 'users.forms.CustomUserCreationForm',
+    'signup': 'user_accounts.forms.CustomUserCreationForm',
     'user_token': 'allauth.account.forms.UserTokenForm',
 }
 

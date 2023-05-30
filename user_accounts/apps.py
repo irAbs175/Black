@@ -9,4 +9,4 @@ from django.apps import AppConfig
 # Applications configuration Class
 class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'users'
+    name = 'user_accounts'

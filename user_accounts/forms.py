@@ -15,7 +15,7 @@ from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from wagtail.users.forms import UserEditForm, UserCreationForm
 from allauth.account.forms import SignupForm , ChangePasswordForm
-from .models import CustomUser
+from .models import user_accounts
 from .utils import validate_Opassword
   
    
@@ -25,7 +25,7 @@ class CustomUserCreationForm(SignupForm):
     password2 = forms.CharField(label='تایید رمز عبور', widget=forms.PasswordInput)
 
     class Meta:
-        model = CustomUser
+        model = user_accounts
         fields = ('email','password1', 'password2')
 
     def clean_password2(self):
@@ -55,13 +55,13 @@ class LoginForm(AuthenticationForm):
         if username and password:
             # Check if user exists with username or email
             try:
-                user = CustomUser.objects.get(
+                user = user_accounts.objects.get(
                     Q(username=username) | Q(email=username)
                 )
-            except CustomUser.DoesNotExist:
+            except user_accounts.DoesNotExist:
                 raise forms.ValidationError('Invalid username or email')
 
-            userDet = CustomUser.objects.get(Q(username=username) | Q(email=username))
+            userDet = user_accounts.objects.get(Q(username=username) | Q(email=username))
             if userDet.has_new_password:
                 auth = authenticate(request=self.request, username=username, password=password)
                 if not auth:
@@ -106,7 +106,7 @@ class CustomUserChangeForm(UserEditForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = CustomUser
+        model = user_accounts
         fields = ('email', 'username', 'full_name', 'is_active', 'is_staff')
 
     def clean_password(self):
@@ -129,7 +129,7 @@ class CustomPasswordChangeForm(ChangePasswordForm):
     )
 
     class Meta:
-        model = CustomUser
+        model = user_accounts
 
     def clean(self):
         cleaned_data = super().clean()

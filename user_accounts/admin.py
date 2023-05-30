@@ -6,14 +6,14 @@ Accounts Administrator Panel
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import user_accounts
 
 
 # Custom user administrator class
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = CustomUser
+    model = user_accounts
     list_display = ['id', 'email', 'username','is_staff']
     search_fields = ['id', 'email', 'username', 'full_name']
     list_filter = ('is_staff', 'is_superuser', 'groups')
@@ -32,4 +32,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 # Register custom User administrator Class
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(user_accounts, CustomUserAdmin)

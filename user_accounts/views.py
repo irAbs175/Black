@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from allauth.account.views import LoginView
 from .forms import CustomUserCreationForm, CustomUserChangeForm, LoginForm
-from .models import CustomUser
+from .models import user_accounts
 
 
 class Register(View):

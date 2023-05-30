@@ -31,21 +31,13 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class user_accounts(AbstractBaseUser, PermissionsMixin):
     id = models.BigAutoField(db_column='id',primary_key=True, unique=True)
     email = models.CharField(db_column='email',max_length=120, unique=True, null=True)
     username = models.CharField(db_column='username',max_length=120, unique=True, null=True)
     WPOPass = models.CharField(db_column='WPOPass',max_length=100, default = False, null=True)
     full_name = models.CharField(db_column='full_name',max_length=255, null=True)
     is_active = models.BooleanField(db_column='is_active',default=True)
-    collection = models.ForeignKey(
-        'wagtailcore.Collection',
-        null=True,
-        blank=True,
-        on_delete=models.SET_NULL,
-        related_name='+',
-        help_text='یک مجموعه برای کاربر انتخاب کنید',
-    )
     is_staff = models.BooleanField(db_column='is_staff',default=False)
     date_joined = models.DateTimeField(db_column='date_joined',auto_now_add=True)
     last_login = models.DateTimeField(db_column='last_login',auto_now_add=True)
