@@ -1,23 +1,23 @@
 """
-2020 Black
+2020 Black Blog app
 developer : #ABS
 """
 
 # Import all requirements
-from django.db import models
-from wagtail.models import Page, PageManager
-from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel
-from wagtail.search import index
-from wagtail.snippets.models import register_snippet
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from wagtail.contrib.routable_page.models import RoutablePageMixin
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase #from wagtail.images
-from django.utils import timezone
 from index.extensions.jalali_converter import jalali_converter as jConvert
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtail.contrib.routable_page.models import RoutablePageMixin
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from user_accounts.models import user_accounts as User
+from wagtail.snippets.models import register_snippet
+from wagtail.models import Page, PageManager
+from wagtail.admin.panels import FieldPanel
+from wagtail.fields import RichTextField
+from taggit.models import TaggedItemBase
+from django.utils import timezone
+from wagtail.search import index
+from django.db import models
 
 
 # Blog Page Manager

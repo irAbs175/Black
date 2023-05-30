@@ -19,7 +19,7 @@ LOCAL_ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection',
            'virus', 'vulnerabilityassessment', 'zeroday', "god"]
 
 # CSRF LOCAL TRUSTED ORIGINS :
-CSRF_LOCAL_TRUSTED_ORIGINS = ['https://8000-irabs175-black-5ivkygqw896.ws-eu98.gitpod.io']
+CSRF_LOCAL_TRUSTED_ORIGINS = ['https://irabs175-psychic-sniffle-69rgpqr6vg634v9w-8000.preview.app.github.dev']
 
 # ALLOWED LOCAL HOSTS :
 ALLOWED_LOCAL_HOSTS = ['8000-irabs175-black-5ivkygqw896.ws-eu98.gitpod.io', '127.0.0.1', 'localhost']
@@ -46,7 +46,7 @@ ADMINS_PANEL = 'UNIQUEADMINISTRATOR174/'
 DEVELOPERS_PANEL = 'UNIQUEDEVELOPER174/'
 
 # BASE_SITE
-BASE_ACTIVE_SITE = '8000-irabs175-black-5ivkygqw896.ws-eu98.gitpod.io'
+BASE_ACTIVE_SITE = 'irabs175-psychic-sniffle-69rgpqr6vg634v9w-8000.preview.app.github.dev'
 
 # SITE DEBUG
 SITE_DEBIG = True
