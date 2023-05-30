@@ -102,6 +102,9 @@ class BlogPage(Page):
     date = models.DateTimeField("Post date",default=timezone.now)
     body = RichTextField(blank=True, verbose_name='محتوای پست')
     description = models.CharField(max_length=25, verbose_name='توضیحات کامل پست')
+
+    subpage_types = []
+    parent_page_types = ['BlogIndex']
     
     search_fields = Page.search_fields + [
         index.SearchField('intro'),

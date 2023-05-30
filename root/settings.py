@@ -5,9 +5,10 @@ developer : #ABS
 """
 
 # Import all requirements
+from .local_settings import *
 from pathlib import Path
-import os
 import locale
+import os
 
 
 # SET PROJECT DIR
@@ -22,8 +23,8 @@ SITE_ID = 1
 # Application definition
 INSTALLED_APPS = [
     # Django apps
-    'django.contrib.staticfiles',
     'django.contrib.contenttypes',
+    'django.contrib.staticfiles',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.admin',
@@ -34,15 +35,15 @@ INSTALLED_APPS = [
     'wagtail.contrib.modeladmin',
     'wagtail.contrib.redirects',
     'wagtail.contrib.forms',
-    'wagtail.snippets',
     'wagtail.documents',
+    'wagtail.snippets',
     'wagtail.embeds',
-    'wagtail.sites',
-    'wagtail.users',
     'wagtail.api.v2',
     'wagtail.images',
     'wagtail.search',
     'wagtail.admin',
+    'wagtail.sites',
+    'wagtail.users',
     'wagtail',
 
     #allauth
@@ -58,10 +59,10 @@ INSTALLED_APPS = [
     'taggit',
 
     # Internal apps
-    'index',
     'user_accounts',
-    'blog',
     'product',
+    'index',
+    'blog',
 ]
 
 # REST FRAMEWORK CONF
@@ -109,10 +110,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.request',
+                'django.template.context_processors.debug',
             ],
         },
     },
@@ -120,11 +121,11 @@ TEMPLATES = [
 
 # User authenticate backends
 AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 # User authenticate model
@@ -200,35 +201,35 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # SERVER DEVELOPER configuration
-ADMINS = [
-    ('ADMINISTRATOR', 'UNIQUEADMINISTRATOR@UNIQUEDOMIL.com'),
+TEST_DEVELOPER_USER = [
+    ('QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com', 'QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com'),
 ]
 
 ''' !!! IMPORTAND !!! '''
 
 # ADMINISTRATOR
-MANAGERS = ADMINS
+MANAGERS = TEST_DEVELOPER_USER
 
 # SECRET KEY
-SECRET_KEY = 'django-insecure-38n_&5$5ga9)#!-r$&jcyk3^v^673x0u3%f8)*4ekxrd$)=ujs'
+SECRET_KEY = SEC_KEY
 
 # BASE ADMIN
-WAGTAILADMIN_BASE_URL = ''
+WAGTAILADMIN_BASE_URL = BASE_ACTIVE_SITE
 
 # ALLOWED HOSTS
-ALLOWED_HOSTS = ['irabs174-verbose-happiness-g4q7p5vrgwwhwpp9-8000.preview.app.github.dev', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ALLOWED_LOCAL_HOSTS
 
 # CSRF trusred origin
-CSRF_TRUSTED_ORIGINS = ['https://irabs174-verbose-happiness-g4q7p5vrgwwhwpp9-8000.preview.app.github.dev']
+CSRF_TRUSTED_ORIGINS = CSRF_LOCAL_TRUSTED_ORIGINS
 
 # Default to dummy email backend. Configure dev/production/local backend
 EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 
 # Enail subject configuration
-EMAIL_SUBJECT_PREFIX = '[Wagtail] '
+EMAIL_SUBJECT_PREFIX = '[Wagtail]'
 
 # Internal IP Address configuration
-INTERNAL_IPS = ('127.0.0.1', '10.0.2.2')
+INTERNAL_IPS = LOCAL_HOST
 
 # logging configuration. The only tangible logging
 LOGGING = {
@@ -256,7 +257,7 @@ LOGGING = {
 }
 
 # Brand name configuration
-WAGTAIL_SITE_NAME = 'YOUR_DOMIN'
+WAGTAIL_SITE_NAME = LOCAL_SITE_NAME
 
 # Reverse the default case-sensitive handling of tags
 TAGGIT_CASE_INSENSITIVE = True
@@ -287,7 +288,7 @@ JALALI_DATE_DEFAULTS = {
 }
 
 # LOGIN URL
-LOGIN_URL = '/login/'
+LOGIN_URL = LOCAL_LOGIN_URL
 
 # LOGIN REDIRECT URL
 LOGIN_REDIRECT_URL = '/'
@@ -329,21 +330,10 @@ ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
 # ACCOUNT_USERNAME_BLACKLIST
-ACCOUNT_USERNAME_BLACKLIST = ["admin", 'security', 'secure', 'protection', 'safeguard',
- 'privacy', 'confidential', 'shield', 'lock', 'encrypted', 'defender', 'guard', 'safety',
-  'firewall', 'securex', 'sentinel', 'secureguard', 'securetech', 'cyber', 'hacker',
-   'securecode', 'protect', 'securenet', 'securezone', 'securelock', 'securedata', 'securecloud',
-    'securelink', 'secureaccess', 'securelogin', 'secureweb', 'accesscontrol', 'authentication',
-     'authorization', 'biometric', 'cryptography', 'cybersecurity', 'dataprotection',
-      'digitalcertificate', 'digitalsignature', 'end-to-endencryption', 'forensics',
-       'identitymanagement', 'informationsecurity', 'integrity', 'intrusiondetection', 'malware',
-        'networksecurity', 'password', 'phishing', 'ransomware', 'riskmanagement',
-         'securityaudit', 'securitybreach', 'securityclearance', 'securitypolicy',
-          'socialengineering','spyware', 'threatintelligence',
-           'virus', 'vulnerabilityassessment', 'zeroday', "god"]
+ACCOUNT_USERNAME_BLACKLIST = LOCAL_ACCOUNT_USERNAME_BLACKLIST
 
 # ACCOUNT_USERNAME_MIN_LENGTH
-ACCOUNT_USERNAME_MIN_LENGTH = 6
+ACCOUNT_USERNAME_MIN_LENGTH = USERNAME_MIN_LENGTH
 
 # Provider specific settings
 SOCIALACCOUNT_PROVIDERS = {
@@ -372,4 +362,4 @@ ACCOUNT_FORMS = {
 }
 
 # Debug
-DEBUG = True
+DEBUG = SITE_DEBIG

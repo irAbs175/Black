@@ -36,7 +36,7 @@ RUN python3 manage.py makemigrations --empty blog && python3 manage.py makemigra
 RUN python3 manage.py migrate
 
 # Create a superuser
-RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin@admin.com', 'admin@admin.com')" | python manage.py shell
+RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com', 'QUEADMINISTRATOR174%!AbfsbflbdbPSJAFISHF@UNIQUEDOMIN.com')" | python manage.py shell
 
 # Run tests
 RUN python manage.py test

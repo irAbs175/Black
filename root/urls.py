@@ -5,7 +5,6 @@ developer : #ABS
 """
 
 # Import all requirements
-import os.path
 from wagtail.documents import urls as wagtaildocs_urls
 from django.conf.urls import handler404, handler500
 from wagtail.admin import urls as wagtailadmin_urls
@@ -16,15 +15,17 @@ from wagtail import urls as wagtail_urls
 from django.contrib import admin
 from django.conf import settings
 from .api import api_router
+from .local_settings import DEVELOPERS_PANEL, ADMINS_PANEL
+import os.path
 
 
 # NOTE : PLEASE KEEP THIS FILE SAFE !
 urlpatterns = [
-    path('UNIQUEADMINISTRATOR/', include(wagtailadmin_urls)),
     path('api-auth/', include('rest_framework.urls')),
+    path(ADMINS_PANEL, include(wagtailadmin_urls)),
     path('UNIQUEDOC/', include(wagtaildocs_urls)),
     path('accounts/', include('allauth.urls')),
-    path('uniqueAdmin/', admin.site.urls),
+    path(DEVELOPERS_PANEL, admin.site.urls),
     path('api/', api_router.urls),
 
     re_path(r'', include(wagtail_urls)),

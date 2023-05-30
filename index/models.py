@@ -47,13 +47,6 @@ class Index(Page):
 
     max_count = 1
 
-    parent_page_types = []
-
-    subpage_types = ['blog.BlogIndex',
-    'blog.BlogPage',
-    'product.Product',
-    ]
-
     content_panels = Page.content_panels + [
         FieldPanel('body'),
     ]
@@ -61,6 +54,8 @@ class Index(Page):
     api_fields = [
         APIField("get_child_pages", serializer=IndexChildPageSerializer()),
     ]
+    
+    subpage_types = ['BlogIndex', 'ProductIndex', '', '']
 
     @property
     def get_child_pages(self):
