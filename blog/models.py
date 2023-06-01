@@ -17,7 +17,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase #from wagtail.images
 from django.utils import timezone
 from index.extensions.jalali_converter import jalali_converter as jConvert
-from users.models import CustomUser as User
+from user_accounts.models import user_accounts as User
 
 
 # Blog Page Manager
@@ -34,15 +34,12 @@ class BlogIndex(Page, RoutablePageMixin):
     content_panels = Page.content_panels + [
         FieldPanel('body'),
     ]
-
+    max_count = 1
     objects = BlogPageManager()
-
     content_panels = Page.content_panels + [
         FieldPanel('intro')
     ]
-
     subpage_types = ['blog.BlogPage']
-
     parent_page_types = ['index.Index']
 
     @property
@@ -85,7 +82,7 @@ class BlogIndex(Page, RoutablePageMixin):
 
 # blog page model
 class BlogPage(Page):
-    owner: models.ForeignKey(User, blank=True, on_delete=models.SET_NULL)
+    owner: models.ForeignKey(User, blank=True, on_delete=models.SET_NULL,) #on_delete=models.SET_NULL
     image = models.ForeignKey(
         'wagtailimages.Image',
         null=True, blank=True,
@@ -99,13 +96,15 @@ class BlogPage(Page):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        related_name='+',
         help_text='یک مجموعه انتخاب کنید',
     )
     intro = models.CharField(max_length=25, verbose_name='توضیحات ابتدایی راجب پست')
     date = models.DateTimeField("Post date",default=timezone.now)
     body = RichTextField(blank=True, verbose_name='محتوای پست')
     description = models.CharField(max_length=25, verbose_name='توضیحات کامل پست')
+
+    subpage_types = []
+    parent_page_types = ['BlogIndex']
     
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
