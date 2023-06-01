@@ -1,10 +1,10 @@
 from wagtail.contrib.routable_page.models import RoutablePageMixin
 from wagtail_color_panel.edit_handlers import NativeColorPanel
+from user_accounts.models import user_accounts as User
 from wagtail.snippets.models import register_snippet
 from wagtail.models import Page, PageManager
 from wagtail_color_panel.fields import ColorField
 from django.db.models import PROTECT, SET_NULL
-from django.contrib.auth.models import User
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 from django.utils import timezone
@@ -43,7 +43,7 @@ class ProductBrand(models.Model):
 @register_snippet
 class ProductColor(models.Model):
     ''' Product Color '''
-    color_title = models.CharField(max_length=10)
+    color_title = models.CharField(max_length=30, verbose_name='نام رنگ', db_index=True)
     color = ColorField()
     pquantity = models.IntegerField(verbose_name='تعداد رنگ بندی :')
     collection = models.ForeignKey(
@@ -76,7 +76,7 @@ class ProductIndex(RoutablePageMixin, Page):
     intro = RichTextField(blank=True, verbose_name='نام صفحه محصولات سایت')
     objects = ProductPageManager()
     max_count = 1
-    subpage_types = ['product.Product']
+    subpage_types = ['product.InventoryItem']
     parent_page_types = ['index.Index']
     content_panels = Page.content_panels + [
         FieldPanel('intro')
@@ -86,7 +86,22 @@ class ProductIndex(RoutablePageMixin, Page):
         verbose_name = 'صفحه محصولات'
 
 
+@register_snippet
+class Offer(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    discount = models.DecimalField(max_digits=5, decimal_places=2)  # For percentage discount, use max_digits=5, decimal_places=2
+    start_date = models.DateField()
+    end_date = models.DateField()
 
+    products = models.ManyToManyField('InventoryItem', related_name='offers')
+
+    def __str__(self):
+        return self.name
+
+
+
+@register_snippet
 class InventoryItem(RoutablePageMixin, Page):
     ''' Inventory => &&& <= Products '''
     product_title = models.CharField(max_length=300, verbose_name='نام و مدل محصول', null=True, blank=True)
@@ -131,6 +146,26 @@ class InventoryItem(RoutablePageMixin, Page):
         FieldPanel('collection'),
     ]
 
+    def apply_discount(self):
+        current_date = timezone.now().date()
+        offers = self.offers.filter(start_date__lte=current_date, end_date__gte=current_date)
+
+        if offers.exists():
+            # Assuming a product can have multiple offers, choose the highest discount
+            max_discount = max(offers.values_list('discount', flat=True))
+            if max_discount > 0:
+                if max_discount <= 1:
+                    # Percentage discount
+                    discount_amount = self.price * Decimal(max_discount)
+                else:
+                    # Fixed amount discount
+                    discount_amount = Decimal(max_discount)
+
+                final_price = self.price - discount_amount
+                return final_price
+
+            return self.price
+    
     @property
     def total_visits(self):
         return self.productvisit_set.aggregate(total=models.Sum('visit'))['total'] or 0
@@ -252,6 +287,7 @@ class InventoryItem(RoutablePageMixin, Page):
         verbose_name_plural = 'محصولات'
 
 
+@register_snippet
 class ProductVisit(models.Model):
     product = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, verbose_name='محصول')
     ip_address = models.CharField(max_length=30, verbose_name='آی پی کاربر')
@@ -270,6 +306,7 @@ class ProductVisit(models.Model):
     save.short_description = 'ذخیره بازدید محصول'
 
 
+@register_snippet
 class PopularProduct(models.Model):
     product_visited = models.ForeignKey(InventoryItem, on_delete=models.CASCADE)
     total_visit = models.IntegerField(verbose_name='تعداد کل بازدید', default=0)
@@ -290,6 +327,7 @@ class PopularProduct(models.Model):
     save.short_description = 'مجموع بازدیدهای محصول'
 
 
+@register_snippet
 class Inventory(models.Model):
     products = models.ForeignKey(InventoryItem, blank=True, null=True, on_delete=SET_NULL)
 
@@ -319,7 +357,7 @@ class Invoice(models.Model):
 
 class InvoiceItem(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.PROTECT)
-    product = models.Model(on_delete=models.CASCADE)
+    product = models.ForeignKey(InventoryItem, on_delete=models.PROTECT)
     quantity = models.IntegerField(default=0)
 
 
