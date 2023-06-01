@@ -9,6 +9,7 @@ from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 from django.utils import timezone
 from django.db.models import Sum
+from index.models import Comment
 from django.db import models
 import pandas as pd
 
@@ -106,6 +107,7 @@ class InventoryItem(RoutablePageMixin, Page):
     ''' Inventory => &&& <= Products '''
     product_title = models.CharField(max_length=300, verbose_name='نام و مدل محصول', null=True, blank=True)
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    comments = models.ManyToManyField(Comment, blank=True)
     collection = models.ForeignKey(
         'wagtailcore.Collection',
         null=True,

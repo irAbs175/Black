@@ -4,20 +4,21 @@ developer : #ABS
 """
 
 # Import all requirements
-from django.db import models
-from wagtail.models import Page, PageManager
-from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel
-from wagtail.search import index
-from wagtail.snippets.models import register_snippet
-from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
-from wagtail.contrib.routable_page.models import RoutablePageMixin
-from modelcluster.fields import ParentalKey, ParentalManyToManyField
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase #from wagtail.images
-from django.utils import timezone
 from index.extensions.jalali_converter import jalali_converter as jConvert
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from modelcluster.fields import ParentalKey, ParentalManyToManyField
+from wagtail.contrib.routable_page.models import RoutablePageMixin
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from user_accounts.models import user_accounts as User
+from wagtail.snippets.models import register_snippet
+from wagtail.models import Page, PageManager
+from wagtail.admin.panels import FieldPanel
+from taggit.models import TaggedItemBase
+from wagtail.fields import RichTextField
+from django.utils import timezone
+from wagtail.search import index
+from index.models import Comment
+from django.db import models
 
 
 # Blog Page Manager
@@ -82,6 +83,7 @@ class BlogIndex(Page, RoutablePageMixin):
 
 # blog page model
 class BlogPage(Page):
+    comments = models.ManyToManyField(Comment, blank=True)
     owner: models.ForeignKey(User, blank=True, on_delete=models.SET_NULL,) #on_delete=models.SET_NULL
     image = models.ForeignKey(
         'wagtailimages.Image',
