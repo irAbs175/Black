@@ -27,6 +27,7 @@ SHELL ["/bin/bash", "-c"]
 RUN source venv/bin/activate
 
 RUN pip3 install --upgrade pip
+RUN pip install -U wagtail_color_panel
 
 # Install project dependencies
 RUN pip3 install -r requirements.txt

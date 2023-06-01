@@ -25,6 +25,7 @@ jdatetime==4.1.1
 l18n==2021.3
 oauthlib==3.2.2
 openpyxl==3.1.2
+pandas==2.0.1
 passlib==1.7.4
 Pillow==9.5.0
 pycparser==2.21
@@ -39,6 +40,5 @@ sqlparse==0.4.4
 telepath==0.3
 urllib3==2.0.2
 wagtail>=2.2
-wagtail-color-panel
 webencodings==0.5.1
 Willow==1.5

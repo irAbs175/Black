@@ -7,7 +7,7 @@ from index.models import SiteBanner
 from index.extensions.http_service import get_client_ip
 from index.extensions.group_list_convertor import group_list
 from index.models import Image
-from .models import Product, ProductBrand, ProductVisit
+from .models import InventoryItem, ProductBrand, ProductVisit
 
 
 '''
