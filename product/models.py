@@ -2,9 +2,9 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin
 from wagtail_color_panel.edit_handlers import NativeColorPanel
 from user_accounts.models import user_accounts as User
 from wagtail.snippets.models import register_snippet
-from wagtail.models import Page, PageManager
 from wagtail_color_panel.fields import ColorField
 from django.db.models import PROTECT, SET_NULL
+from wagtail.models import Page, PageManager
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 from django.utils import timezone
