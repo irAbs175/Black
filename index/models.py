@@ -54,8 +54,7 @@ class Index(Page):
     api_fields = [
         APIField("get_child_pages", serializer=IndexChildPageSerializer()),
     ]
-    
-    subpage_types = ['BlogIndex', 'ProductIndex', '', '']
+  
 
     @property
     def get_child_pages(self):
