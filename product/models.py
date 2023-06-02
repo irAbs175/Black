@@ -270,7 +270,7 @@ class InventoryItem(RoutablePageMixin, Page):
         context['products'] = loaded_product if loaded_product is not None else 0
         return context
 
-    def server(self, request, *args, **kwargs):
+    def serve(self, request, *args, **kwargs):
         return render(
             request,
             self.get_template(request, *args, **kwargs),
@@ -351,6 +351,19 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = 'انبار کالا'
         verbose_name_plural = 'انبار کالا'
+
+
+@register_snippet
+class CartItem(models.Model):
+    product = models.ForeignKey(InventoryItem, on_delete=models.CASCADE, verbose_name='محصول')
+    quantity = models.PositiveIntegerField(verbose_name='تعداد')
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='قیمت')
+    total = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='مجموع')
+    
+    class Meta:
+        verbose_name = 'آیتم سبد خرید'
+        verbose_name_plural = 'آیتم‌های سبد خرید'
+
 
 
 class Invoice(models.Model):

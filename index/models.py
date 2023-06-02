@@ -54,12 +54,7 @@ class Index(Page):
     api_fields = [
         APIField("get_child_pages", serializer=IndexChildPageSerializer()),
     ]
-<<<<<<< HEAD
-  
-
-=======
     
->>>>>>> REST_DEVELOP
     @property
     def get_child_pages(self):
         return self.get_children().public().live()

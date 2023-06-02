@@ -1,21 +1,5 @@
-''' DEVELOPER NOTES '''
-    #from django.contrib.auth.models import User
-    # simple usage of wagtail color panel
-
-        # install :
-
-        [pip install wagtail-color-panel]
-            
-        # usage :
-
-            from wagtail.core.models import Page
-            from wagtail_color_panel.fields import ColorField
-            from wagtail_color_panel.edit_handlers import NativeColorPanel
-
-
-            class MyPage(Page):
-                color = ColorField()
-
-                content_panels = Page.content_panels + [
-                    NativeColorPanel('color'),
-                ]
+<form method="POST" action="{% url 'add_to_cart' item.id %}">
+  {% csrf_token %}
+  <input type="number" name="quantity" value="1" min="1">
+  <button type="submit">افزودن به سبد خرید</button>
+</form>

@@ -5,17 +5,18 @@ developer : #ABS
 """
 
 # Import all requirements
+from .local_settings import DEVELOPERS_PANEL, ADMINS_PANEL
 from wagtail.documents import urls as wagtaildocs_urls
 from django.conf.urls import handler404, handler500
 from wagtail.admin import urls as wagtailadmin_urls
 from django.views.generic.base import RedirectView
+from product.views import CartView, CheckoutView
 from django.urls import include, path, re_path
 from django.conf.urls.static import static
 from wagtail import urls as wagtail_urls
 from django.contrib import admin
 from django.conf import settings
 from .api import api_router
-from .local_settings import DEVELOPERS_PANEL, ADMINS_PANEL
 import os.path
 
 
@@ -24,6 +25,8 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path(ADMINS_PANEL, include(wagtailadmin_urls)),
     path('UNIQUEDOC/', include(wagtaildocs_urls)),
+    path('cart/', CartView.as_view(), name='cart'),
+    path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('accounts/', include('allauth.urls')),
     path(DEVELOPERS_PANEL, admin.site.urls),
     path('api/', api_router.urls),
