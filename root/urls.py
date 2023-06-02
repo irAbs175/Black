@@ -22,11 +22,11 @@ import os.path
 
 # NOTE : PLEASE KEEP THIS FILE SAFE !
 urlpatterns = [
+    path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('api-auth/', include('rest_framework.urls')),
     path(ADMINS_PANEL, include(wagtailadmin_urls)),
     path('UNIQUEDOC/', include(wagtaildocs_urls)),
     path('cart/', CartView.as_view(), name='cart'),
-    path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('accounts/', include('allauth.urls')),
     path(DEVELOPERS_PANEL, admin.site.urls),
     path('api/', api_router.urls),
