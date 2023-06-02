@@ -70,7 +70,6 @@ class Index(Page):
         verbose_name = "خانه"
 
 
-
 class Comment(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
