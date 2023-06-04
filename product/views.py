@@ -7,7 +7,52 @@ from index.models import SiteBanner
 from index.extensions.http_service import get_client_ip
 from index.extensions.group_list_convertor import group_list
 from index.models import Image
-from .models import Product, ProductBrand, ProductVisit
+from .models import InventoryItem, ProductBrand, ProductVisit, CartItem
+
+
+def update_cart_item(request, cart_item_id):
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+        
+        try:
+            cart_item = CartItem.objects.get(id=cart_item_id)
+            cart_item.quantity = quantity
+            cart_item.save()
+            return redirect('cart')  # یا هر روتی که صفحه سبد خرید شما باشد
+        except CartItem.DoesNotExist:
+            return redirect('cart')  # یا هر روتی که صفحه سبد خرید شما باشد
+    
+    return render(request, 'update_cart_item.html')
+
+
+class CartView(View):
+    def get(self, request):
+        cart = request.session.get("cart", [])
+        products = InventoryItem.objects.live().filter(id__in=cart)
+        return render(request, "utils/cart.html", {"products": products})
+
+    def post(self, request):
+        product_id = request.POST.get("product_id")
+        if product_id:
+            cart = request.session.get("cart", [])
+            cart.append(int(product_id))
+            request.session["cart"] = cart
+        return redirect("cart")
+
+class CheckoutView(View):
+    def get(self, request):
+        cart = request.session.get("cart", [])
+        products = InventoryItem.objects.live().filter(id__in=cart)
+        return render(request, "utils/checkout.html", {"products": products})
+
+    def post(self, request):
+        # پردازش فرآیند چک‌اوت و پرداخت
+        # پاک کردن سبد خرید
+        request.session["cart"] = []
+        return redirect("checkout_success")
+
+
+
 
 
 '''
