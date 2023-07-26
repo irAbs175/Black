@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>چاپ {% for item in list %}{{ item.product_name }} {{ item.material_code }}{% endfor %}</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+{% for detail in list %}
+<input name="PRODUCT_NAME" type="hidden" value="{{ detail.product_name }}">
+<input name="PRODUCT_CODE" type="hidden" value="{{ detail.product_code }}">
+<input name="PRODUCT_COLOR" type="hidden" value="{{ detail.product_color }}">
+<input name="PRODUCT_LOCATION" type="hidden" value="{{ detail.product_location }}">
+<input name="PRODUCT_HALL" type="hidden" value="{{ detail.product_hall }}">
+<input name="PRODUCT_DATE" type="hidden" value="{{ detail.jpub }}">
+<input name="PRODUCT_UNIT" type="hidden" value="{{ detail.product_unit }}">
+{% endfor %}
+<div class="cardex" id="cardexprint">
+    <hr>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>ردیف</th>
+                <th>اقدام کننده</th>
+                <th>نام محصول</th>
+                <th>کد محصول</th>
+                <th>رنگ محصول</th>
+                <th>موجودی محصول</th>
+                <th>انبار محصول</th>
+                <th>سالن انبار محصول</th>
+                <th>واحد محصول</th>
+                <th>تاریخ ایجاد محصول</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in list %}
+            <tr>
+                <td>{{ data.row }}</td>
+                <td>{{ data.product_author }}</td>
+                <td>{{ data.product_name }}</td>
+                <td>{{ data.product_code }}</td>
+                <td>{{ data.product_color }}</td>
+                <td>{{ data.product_quantity }}</td>
+                <td>{{ data.product_location }}</td>
+                <td>{{ data.product_hall }}</td>
+                <td>{{ data.product_unit }}</td>
+                <td>{{ data.jpub }}</tr>
+            </tr>
+            {% empty %}
+            <td>هنور کاردکسی ایجاد نشده.</td>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% block JS %}
+<script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
+{% endblock %}
+{% endblock %}

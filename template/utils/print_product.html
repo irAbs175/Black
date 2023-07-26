@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>چاپ {% for item in product %}{{ item.product_name }} {{ item.product_code }}{% endfor %}</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+{% for detail in product %}
+<input name="PRODUCT_NAME" type="hidden" value="{{ detail.product_name }}">
+<input name="PRODUCT_CODE" type="hidden" value="{{ detail.product_code }}">
+<input name="PRODUCT_COLOR" type="hidden" value="{{ detail.product_color }}">
+<input name="PRODUCT_LOCATION" type="hidden" value="{{ detail.product_location }}">
+<input name="PRODUCT_HALL" type="hidden" value="{{ detail.product_hall }}">
+<input name="PRODUCT_DATE" type="hidden" value="{{ detail.jpub }}">
+<input name="PRODUCT_UNIT" type="hidden" value="{{ detail.product_unit }}">
+{% endfor %}
+        <div class="cardex" id="cardexprint">
+            
+            <div class="h-cardex">کاردکس کالا</div>
+            {% for field in product %}
+            <span>نام کالا : {{ field.product_name }}</span>
+            <span>کد کالا : {{ field.product_code }}</span>
+            <span>رنگ کالا : {{field.product_color}}</span>
+            <span>نام انبار : {{ field.product_location }}</span>
+            <span>محل کالا : {{ field.product_hall }}</span>
+            <span>واحد شمارش : {{ field.product_unit }}</span>
+            <span>تاریخ ثبت : {{ field.jpub }}</span>
+            {% endfor %}
+            <hr>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ردیف</th>
+                        <th>تاریخ</th>
+                        <th>شماره فاکتور</th>
+                        <th>شرح اقدامات</th>
+                        <th>ورودی</th>
+                        <th>خروجی</th>
+                        <th>موجودی</th>
+                        <th>اقدام کننده</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in cardex %}
+                    <tr>
+                        <td>{{ data.row }}</td>
+                        <td>{{ data.jpub }}</td>
+                        <td>{{ data.factor_number }}</td>
+                        <td>{{ data.description }}</td>
+                        <td>{% if data.status %}{{ data.number }}{% else %}0{% endif %}</td>
+                        <td>{% if data.status %}0{% else %}{{ data.number }}{% endif %}</td>
+                        <td>{{ data.quantity }}</td>
+                        <td>{{ data.author }}</td>
+                    </tr>
+                    {% empty %}
+                    <td>هنور کاردکسی ایجاد نشده.</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% block JS %}
+<script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
+<script src="{% static 'assets/js/utils/print_products.js' %}"></script>
+{% endblock %}
+{% endblock %}

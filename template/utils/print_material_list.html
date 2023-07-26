@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>چاپ {% for item in material %}{{ item.material_name }} {{ item.material_code }}{% endfor %}</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+{% for detail in material %}
+<input name="PRODUCT_NAME" type="hidden" value="{{ detail.material_name }}">
+<input name="PRODUCT_CODE" type="hidden" value="{{ detail.material_code }}">
+<input name="PRODUCT_COLOR" type="hidden" value="{{ detail.material_color }}">
+<input name="PRODUCT_LOCATION" type="hidden" value="{{ detail.material_location }}">
+<input name="PRODUCT_HALL" type="hidden" value="{{ detail.material_hall }}">
+<input name="PRODUCT_DATE" type="hidden" value="{{ detail.jpub }}">
+<input name="PRODUCT_UNIT" type="hidden" value="{{ detail.material_unit }}">
+{% endfor %}
+<div class="cardex" id="cardexprint">
+    <hr>
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th>ردیف</th>
+                <th>اقدام کننده</th>
+                <th>نام ماده اولیه</th>
+                <th>کد ماده اولیه</th>
+                <th>رنگ ماده اولیه</th>
+                <th>موجودی ماده اولیه</th>
+                <th>انبار ماده اولیه</th>
+                <th>سالن انبار ماده اولیه</th>
+                <th>واحد ماده اولیه</th>
+                <th>تاریخ ایجاد ماده اولیه</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in list %}
+            <tr>
+                <td>{{ data.row }}</td>
+                <td>{{ data.material_author }}</td>
+                <td>{{ data.material_name }}</td>
+                <td>{{ data.material_code }}</td>
+                <td>{{ data.material_color }}</td>
+                <td>{{ data.material_quantity }}</td>
+                <td>{{ data.material_location }}</td>
+                <td>{{ data.material_hall }}</td>
+                <td>{{ data.material_unit }}</td>
+                <td>{{ data.jpub }}</tr>
+            </tr>
+            {% empty %}
+            <td>هنور کاردکسی ایجاد نشده.</td>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% block JS %}
+<script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
+{% endblock %}
+{% endblock %}

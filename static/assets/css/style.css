@@ -1,0 +1,47 @@
+:root {
+    --wttc: #ffffff;
+    --bktc: rgb(33, 33, 33);
+    --betc: rgb(28, 51, 255);
+    --bebc: rgb(28, 51, 255);
+}
+.bodyx {
+ width: 1200px;
+}
+body {
+    background-color: rgb(54, 54, 54);
+}
+
+.wttc {
+    color: rgb(255, 255, 255);
+}
+.wtbc {
+    color: rgb(255, 255, 255);
+}
+
+.bktc {
+    color: rgb(33, 33, 33);
+}
+
+.bkbc {
+    background-color: rgb(33, 33, 33);
+}
+
+.betc {
+    color: rgb(28, 51, 255);
+}
+
+.bebc {
+    background-color: rgb(28, 51, 255);
+}
+
+.tac {
+    text-align: center;
+}
+
+.tar {
+    text-align: right;
+}
+
+.tal {
+    text-align: left;
+}

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>افزودن کالا</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+    <div class="container-fluid cardexbody">
+        <!-- -------کاردکس------ -->
+        <div class="container-fluid"><br>
+
+            <div class="cardex" id="cardexprint">
+
+                <div class="row g-3">
+                    <div class="col-6">
+                        <input class="form-control productName" type="text" placeholder="نام محصول"
+                            aria-label="default input example" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control productCode" type="text" placeholder="کد محصول"
+                            aria-label="default input example" required>
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control productColor" type="text" placeholder="رنگ محصول"
+                            aria-label="default input example" required>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب محل انبار</option>
+                            <option value="1">انبار اخلاقی</option>
+                            <option value="2">انبار پلاک سه</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب سالن انبار</option>
+                            <option value="1">سالن یک</option>
+                            <option value="2">سالن دو</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب واحد شمارش</option>
+                            <option value="1">عدد</option>
+                            <option value="2">متر</option>
+                            <option value="3">سانتیمتر</option>
+                            <option value="4">کیلوگرم</option>
+                            <option value="5">جفت</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary do0" type="submit">بروزرسانی کاردکس</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% block JS %}
+<script src="{% static 'assets/js/inventory/products/add_products.js' %}"></script>
+{% endblock %}
+{% endblock %}

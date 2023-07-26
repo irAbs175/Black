@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% if user.is_staff %}
+{% block TITLE %}
+<title>درون ریزی فایل اکسل</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/materials/add_materials.css' %}">
+{% endblock %}
+{% block CONTENT %}
+{% if status %}
+<script>
+Swal.fire({
+              title: '{{ status }}',
+              showConfirmButton: false,
+              timer: 2500,
+            });
+</script>
+{% endif %}
+<div class="container-fluid cardexbody">
+    <div class="container-fluid"><br>
+        <div class="cardex" id="cardexprint">
+            <div class="row g-3">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                          <div class="x_panel">
+                            <div class="x_title">
+                              <h2>درون ریزی از فایل اکسل به سیستم انبار</h2>           
+                              <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                              <input type="text" name="mode" class="form-control" placeholder="انتخاب حالت درون ریزی از بین: محصولات|مواد اولیه" required>
+                              <div class="col-md-8 col-sm-12 col-xs-12 form-group">      
+                              </div>
+                                    <input type="file" name="myfile" class="form-control" placeholder="بارگزاری فایل درون ریزی" required>
+                                    <button class="btn btn-success" type="submit">بارگزاری فایل اکسل</button>   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                  </form>
+            </div></div><dir></dir>
+{% block JS %}
+{% endblock %}
+{% endblock %}
+{% else %}
+<h2>درخواست نامعتبر - شما مجاز به مشاهده این صفحه نمی باشید</h2>
+{% endif %}

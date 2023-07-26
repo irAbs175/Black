@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>کاربران</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/accounts/accounts.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<table class="table table-striped text-center">
+    <tr>
+        <th>نام و نام خانوادگی</th>
+        <th>شماره تماس</th>
+        <th>پست الکترونیک</th>
+        <th>وضعیت</th>
+        <th>نقش کاربر</th>
+        <th>ارتباط مستقیم</th>
+    </tr>
+<!--ACCOUNTS LIST-->
+    {% for user in accounts %}
+    <tr>
+        <td>{{ user.first_name }} {{ user.last_name }}</td>
+        <td>{{ user.phoneNumber }}</td>
+        <td>{{ user.email }}</td>
+        <td>{% if user.status %}آنلاین{% else %}آفلاین{% endif %}</td>
+        <td>{% if user.is_staff %}توسعه دهنده{% elif user.is_superuser %}مدیریت{% elif user.is_inventor %}انباردار{% elif user.is_calculator %}حسابدار{% else %}تعریف نشده{% endif %}</td>
+        <td><i class="bi bi-chat-right-dots sip"></i></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

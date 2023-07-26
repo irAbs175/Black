@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block TITLE %}
+<title>به روز رسانی ماده اولیه</title>
+{% endblock %}
+{% block CSS %}
+<link rel="stylesheet" href="{% static 'assets/css/inventory/materials/add_materials.css' %}">
+{% endblock %}
+{% block CONTENT %}
+<input type="hidden" name="CODE" value="{{code}}">
+<div class="container-fluid cardexbody">
+    <!-- -------کاردکس------ -->
+    <div class="container-fluid"><br>
+        <div class="text-center mb-1">
+            <a href="/inventory/material_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+        <a href="/inventory/material_cardex_pdf/{{code}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
+        </div>
+        <div class="cardex" id="cardexprint">
+            <div class="h-cardex">کاردکس کالا</div>
+            {% for field in material %}
+            <span>نام کالا : {{ field.material_name }}</span>
+            <span>کد کالا : {{ field.material_code }}</span>
+            <span>رنگ کالا : {{field.material_color}}</span>
+            <span>نام انبار : {{ field.material_location }}</span>
+            <span>محل کالا : {{ field.material_hall }}</span>
+            <span>واحد شمارش : {{ field.material_unit }}</span>
+            <span>تاریخ ثبت : {{ field.jpub }}</span>
+            {% endfor %}
+            <hr>
+            <table class="table">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ردیف</th>
+                        <th>تاریخ</th>
+                        <th>شماره حواله/فاکتور</th>
+                        <th>شرح اقدامات</th>
+                        <th>ورودی</th>
+                        <th>خروجی</th>
+                        <th>موجودی</th>
+                        <th>اقدام کننده</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in cardex %}
+                    <tr>
+                        <td>{{ data.row }}</td>
+                        <td>{{ data.jpub }}</td>
+                        <td>{{ data.factor_number }}</td>
+                        <td>{{ data.description }}</td>
+                        <td>{% if data.status %}{{ data.number }}{% else %}0{% endif %}</td>
+                        <td>{% if data.status %}0{% else %}{{ data.number }}{% endif %}</td>
+                        <td>{{ data.quantity }}</td>
+                        <td>{{ data.author }}</td>
+                    </tr>
+                    {% empty %}
+                    <td>هنور کاردکسی ایجاد نشده.</td>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div><br>
+
+    </div>
+
+
+    <!-- ----------------- -->
+    <!-- فیلد هایی که باید توسط انبار دار پر شود -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    {% for detail in material %}
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_name }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_code }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_color }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_location }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_hall }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="{{ detail.material_unit }}"
+                            aria-label="default input example" disabled>
+                    </div><br>
+                    {% endfor %}
+                    <!-- <div class="col-6">
+                <input class="form-control" type="text" placeholder="نام ماده اولیه" aria-label="default input example">
+            </div><br> -->
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="شماره حواله / فاکتور"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <select class="form-select" aria-label="Default select example" required>
+                            <option selected>انتخاب عملیات</option>
+                            <option value="1">ورودی</option>
+                            <option value="2">خروجی</option>
+                        </select>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="number" placeholder="تعداد"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="شرح اقدامات"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <button class="btn btn-primary do1" type="submit">بروزرسانی عملیات</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ----------------- -->
+</div>
+{% block JS %}
+<script src="{% static 'assets/js/inventory/materials/materials_cardex.js' %}"></script>
+{% endblock %}
+{% endblock %}

@@ -1,5 +1,0 @@
-<form method="POST" action="{% url 'add_to_cart' item.id %}">
-  {% csrf_token %}
-  <input type="number" name="quantity" value="1" min="1">
-  <button type="submit">افزودن به سبد خرید</button>
-</form>
