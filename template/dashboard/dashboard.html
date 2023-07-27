@@ -7,13 +7,6 @@
 <link rel="stylesheet" href="{% static 'assets/css/dashboard/dashboard.css' %}">
 {% endblock %}
 {% block CONTENT %}
-{% if user.is_staff %}
-<form method="post" url="{% url 'dashboard' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ excel_form.as_p }}
-    <button style="align-items: center;" type="submit">Upload</button>
-</form>
-{% endif %}
 <div class="container-fluid bodyx">
     <!-- ----منو بار---- -->
     <div >

@@ -30,6 +30,7 @@ class Products(models.Model):
 
 
 class ProductsCardex(models.Model):
+    public_key = models.CharField(max_length=350, verbose_name='کاندید',null=True, blank=True )
     author = models.CharField(max_length=40, verbose_name='اپراتور ثبت',null=False, blank=False )
     product = models.CharField(max_length=50, verbose_name='کالا',null=False, blank=False )
     factor_number = models.CharField(max_length=50, verbose_name='شماره فاکتور',null=False, blank=False )
@@ -75,6 +76,7 @@ class Materials(models.Model):
 
 
 class MaterialsCardex(models.Model):
+    public_key = models.CharField(max_length=350, verbose_name='کاندید',null=True, blank=True )
     author = models.CharField(max_length=40, verbose_name='اپراتور ثبت',null=False, blank=False )
     material = models.CharField(max_length=50, verbose_name='ماده اولیه',null=False, blank=False )
     factor_number = models.CharField(max_length=50, verbose_name='شماره فاکتور',null=False, blank=False )

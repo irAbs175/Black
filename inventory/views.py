@@ -54,8 +54,6 @@ class MaterialsCardexsViewSet(generics.ListCreateAPIView):
     filter_backends = [filters.OrderingFilter, filters.SearchFilter]
 
 
-
-
 ''' Render pages '''
 @login_required
 def materials(request):
@@ -76,21 +74,25 @@ def add_products(request):
     return render(request, "inventory/products/add_products.html")
 
 @login_required
-def add_products_cardex(request, location__hall__code__color):
-    product = Products.objects.filter(product_location = inventory, product_code = 'code', product_color = color,)
+def add_products_cardex(request, location__code__color):
+    location, code, color = getData(location__code__color)
+    key = {'location':location,'code': code, 'color':color}
+    product = Products.objects.filter(product_location = location, product_code = code, product_color = color)
     if product.exists():
-        cardex = ProductsCardex.objects.filter(product = 'code').order_by('-date')
-        context = {'code' : 'code', 'product' : product, 'cardex' : cardex}
+        cardex = ProductsCardex.objects.filter(product = code, public_key = f'{location}{code}{color}').order_by('-date')
+        context = {'product' : product, 'cardex' : cardex, 'key' : key}
         return render(request, "inventory/products/add_cardex.html", context)
     else:
         return render(request, "dashboard/dashboard.html")
 
 @login_required
-def add_materials_cardex(request, location__hall__code__color):
-    material = Materials.objects.filter(material_location = inventory, material_code = 'code', material_color = color,)
+def add_materials_cardex(request, location__code__color):
+    location, code, color = getData(location__code__color)
+    key = {'location':location,'code': code, 'color':color}
+    material = Materials.objects.filter(material_location = location, material_code = code, material_color = color)
     if material.exists():
-        cardex = MaterialsCardex.objects.filter(material = 'code').order_by('-date')
-        context = {'code' : 'code', 'material' : material, 'cardex' : cardex}
+        cardex = MaterialsCardex.objects.filter(material = code, public_key = f'{location}{code}{color}').order_by('-date')
+        context = {'material' : material, 'cardex' : cardex, 'key' : key}
         return render(request, "inventory/materials/add_cardex.html", context)
     else:
         return render(request, "dashboard/dashboard.html")

@@ -21,8 +21,8 @@ def js_add_products(request):
                     if product_location and product_location != "انتخاب محل انبار":
                         if product_hall and product_hall != "انتخاب سالن انبار":
                             if product_unit and product_unit != "انتخاب واحد شمارش":
-                                if Products.objects.filter(product_name = product_name, product_code = product_code).exists():
-                                    return JsonResponse({'status': 'محصول از قبل تعریف شده و موجود است', 'success': False})
+                                if Products.objects.filter(product_location = product_location, product_code = product_code, product_color = product_color).exists():
+                                    return JsonResponse({'status': 'محصولی با این رنگ بندی در این انبار موجود است', 'success': False})
                                 else:
                                     full_name = request.user.first_name + " " + request.user.last_name
                                     Products.objects.create(
@@ -67,8 +67,8 @@ def js_add_materials(request):
                     if material_location and material_location != "انتخاب محل انبار":
                         if material_hall and material_hall != "انتخاب سالن انبار":
                             if material_unit and material_unit != "انتخاب واحد شمارش":
-                                if Materials.objects.filter(material_name = material_name, material_code = material_code).exists():
-                                    return JsonResponse({'status': 'ماده اولیه از قبل تعریف شده و موجود است', 'success': False})
+                                if Materials.objects.filter(material_location = material_location, material_code = material_code, material_color = material_color).exists():
+                                    return JsonResponse({'status': 'ماده اولیه با این رنگ بندی در این انبار موجود است', 'success': False})
                                 else:
                                     full_name = request.user.first_name + " " + request.user.last_name
                                     Materials.objects.create(
@@ -101,27 +101,34 @@ def js_add_materials(request):
 @csrf_exempt
 def js_update_products(request):
     if request.method == 'POST':
+        product_location = request.POST.get('product_location')
+        product_hall = request.POST.get('product_hall')
+        product_code = request.POST.get('product_code')
+        product_color =request.POST.get('product_color')
         factor_number = request.POST.get('factor_number')
+        factor_row = request.POST.get('factor_row')
         number = request.POST.get('number')
         description = request.POST.get('description')
         operation = request.POST.get('operation')
-        product_code = request.POST.get('product_code')
         if factor_number:
             if number:
                 if operation and operation != "انتخاب عملیات":
                     if description:
                         if product_code:
-                            if Products.objects.filter(product_code = product_code).exists():
+                            if Products.objects.filter(product_location = product_location, product_code = product_code, product_color = product_color).exists():
                                 full_name = request.user.first_name + " " + request.user.last_name
-                                product = Products.objects.filter(product_code = product_code).first()
+                                product = Products.objects.filter(product_location = product_location, product_code = product_code, product_color = product_color).first()
+                                public_key = f'{product_location}{product_code}{product_color}'
                                 if operation == "ورودی":
                                     total = product.product_quantity + int(number)
                                     product.product_quantity = total
                                     product.save()
                                     ProductsCardex.objects.create(
+                                        public_key = public_key,
                                         author = full_name,
                                         product = product_code,
                                         factor_number = factor_number,
+                                        factor_row = factor_row,
                                         number = number,
                                         description = description,
                                         operation = operation,
@@ -137,9 +144,11 @@ def js_update_products(request):
                                         product.product_quantity = total
                                         product.save()
                                         ProductsCardex.objects.create(
+                                            public_key = public_key,
                                             author = full_name,
                                             product = product_code,
                                             factor_number = factor_number,
+                                            factor_row = factor_row,
                                             number = number,
                                             description = description,
                                             operation = operation,
@@ -166,27 +175,34 @@ def js_update_products(request):
 @csrf_exempt
 def js_update_materials(request):
     if request.method == 'POST':
+        material_location = request.POST.get('material_location')
+        material_hall = request.POST.get('material_hall')
+        material_code = request.POST.get('material_code')
+        material_color =request.POST.get('material_color')
         factor_number = request.POST.get('factor_number')
+        factor_row = request.POST.get('factor_row')
         number = request.POST.get('number')
         description = request.POST.get('description')
         operation = request.POST.get('operation')
-        material_code = request.POST.get('material_code')
         if factor_number:
             if number:
                 if operation and operation != "انتخاب عملیات":
                     if description:
                         if material_code:
-                            if Materials.objects.filter(material_code = material_code).exists():
+                            if Materials.objects.filter(material_location = material_location, material_code = material_code, material_color = material_color).exists():
                                 full_name = request.user.first_name + " " + request.user.last_name
-                                material = Materials.objects.filter(material_code = material_code).first()
+                                material = Materials.objects.filter(material_location = material_location, material_code = material_code, material_color = material_color).first()
+                                public_key = f'{material_location}{material_code}{material_color}'
                                 if operation == "ورودی":
                                     total = material.material_quantity + int(number)
                                     material.material_quantity = total
                                     material.save()
                                     MaterialsCardex.objects.create(
+                                        public_key = public_key,
                                         author = full_name,
                                         material = material_code,
                                         factor_number = factor_number,
+                                        factor_row = factor_row,
                                         number = number,
                                         description = description,
                                         operation = operation,
@@ -202,9 +218,11 @@ def js_update_materials(request):
                                         material.material_quantity = total
                                         material.save()
                                         MaterialsCardex.objects.create(
+                                            public_key = public_key,
                                             author = full_name,
                                             material = material_code,
                                             factor_number = factor_number,
+                                            factor_row = factor_row,
                                             number = number,
                                             description = description,
                                             operation = operation,

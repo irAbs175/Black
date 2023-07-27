@@ -7,11 +7,11 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
 {% endblock %}
 {% block CONTENT %}
-<input type="hidden" name="CODE" value="{{code}}">
+<input type="hidden" name="CODE" value="{{key.code}}">
 <div class="container-fluid cardexbody">
             <div class="text-center mb-1">
-            <a href="/inventory/product_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
-            <a href="/inventory/product_cardex_pdf/{{code}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
+            <a href="/inventory/product_cardex_excel/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+            <a href="/inventory/product_cardex_pdf/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
         </div>
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>
@@ -72,19 +72,19 @@
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control PRODUCT_CODE" value="{{ detail.product_code }}"  type="text" placeholder="{{ detail.product_code }}"
+                        <input class="form-control PRODUCT_CODE" value="{{ key.code }}"  type="text" placeholder="product_code"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control PRODUCT_COLOR" value="{{ detail.product_color }}"  type="text" placeholder="{{ detail.product_color }}"
+                        <input class="form-control PRODUCT_COLOR" value="{{ key.color }}"  type="text" placeholder="product_color"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control PRODUCT_LOCATION" value="{{ detail.product_location }}"  type="text" placeholder="{{ detail.product_location }}"
+                        <input class="form-control PRODUCT_LOCATION" value="{{ key.location }}"  type="text" placeholder="product_location"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control PRODUCT_HALL" value="{{ detail.product_hall }}"  type="text" placeholder="{{ detail.product_hall }}"
+                        <input class="form-control PRODUCT_HALL" value="{{ detail.product_hall }}"  type="text" placeholder="prodcut_hall"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
@@ -105,6 +105,10 @@
                 <div>
                     <div class="col-12">
                         <input class="form-control" type="text" placeholder="شماره حواله / فاکتور"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="ردیف فاکتور"
                             aria-label="default input example" required>
                     </div><br>
                     <div class="col-12">

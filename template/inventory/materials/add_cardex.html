@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/materials/add_materials.css' %}">
 {% endblock %}
 {% block CONTENT %}
-<input type="hidden" name="CODE" value="{{code}}">
+<input type="hidden" name="CODE" value="{{key.code}}">
 <div class="container-fluid cardexbody">
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>
         <div class="text-center mb-1">
-            <a href="/inventory/material_cardex_excel/{{code}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
-        <a href="/inventory/material_cardex_pdf/{{code}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
+            <a href="/inventory/material_cardex_excel/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+        <a href="/inventory/material_cardex_pdf/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
         </div>
         <div class="cardex" id="cardexprint">
             <div class="h-cardex">کاردکس کالا</div>
@@ -72,27 +72,27 @@
                 <div>
                     {% for detail in material %}
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_name }}"
+                        <input class="form-control" type="text" value="{{ detail.material_name }}" placeholder="material_name"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_code }}"
+                        <input class="form-control" type="text" value="{{ key.code }}" placeholder="material_code"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_color }}"
+                        <input class="form-control" type="text" value="{{ key.color }}" placeholder="material_color"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_location }}"
+                        <input class="form-control" type="text" value="{{ key.location }}" placeholder="material_location"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_hall }}"
+                        <input class="form-control MATERIAL_HALL" type="text" value="{{ detail.material_hall }}" placeholder="material_hall"
                             aria-label="default input example" disabled>
                     </div><br>
                     <div class="col-12">
-                        <input class="form-control" type="text" placeholder="{{ detail.material_unit }}"
+                        <input class="form-control" type="text" value="{{ detail.material_unit }}"
                             aria-label="default input example" disabled>
                     </div><br>
                     {% endfor %}
@@ -105,6 +105,10 @@
                 <div>
                     <div class="col-12">
                         <input class="form-control" type="text" placeholder="شماره حواله / فاکتور"
+                            aria-label="default input example" required>
+                    </div><br>
+                    <div class="col-12">
+                        <input class="form-control" type="text" placeholder="ردیف فاکتور"
                             aria-label="default input example" required>
                     </div><br>
                     <div class="col-12">

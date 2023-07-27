@@ -1,15 +1,24 @@
-$(document).ready(function() {
-console.log("+> hi");
-});// End ready
 $(".do1").click(function() {
-  let productCode = $("input[name='CODE']").val();
+  let materialLocation = $("input[placeholder='material_location']").val();
+  let materialHall = $(".MATERIAL_HALL").val();
+  let materialCode = $("input[placeholder='material_code']").val();
+  let materialColor = $("input[placeholder='material_color']").val();
   let factorNumber = $("input[placeholder='شماره حواله / فاکتور']").val();
+  let factorRow = $("input[placeholder='ردیف فاکتور']").val();
   let number = $("input[placeholder='تعداد']").val();
   let description = $("input[placeholder='شرح اقدامات']").val();
   let operation = $("select:eq(0)").find(":selected").text();
+  console.log(materialLocation);
+  console.log(materialHall);
+  console.log(materialCode);
+  console.log(materialColor);
   let data = {
-      'material_code' : productCode,
+      'material_location' : materialLocation,
+      'material_hall' : materialHall,
+      'material_code' : materialCode,
+      'material_color' : materialColor,
       'factor_number' : factorNumber,
+      'factor_row' : factorRow,
       'number' : number,
       'description' : description,
       'operation' : operation,

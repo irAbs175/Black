@@ -35,7 +35,7 @@ $(".do0").click(function() {
               showConfirmButton: false,
               timer: 2000,
             });
-            window.location.href = `/inventory/materials/${productLocation}/${productHall}/${productCode}/${productColor}`;
+            window.location.href = `/inventory/materials/${productLocation}^${productCode}^${productColor}`;
           }
         },
         error: function(xhr, status, error) {
