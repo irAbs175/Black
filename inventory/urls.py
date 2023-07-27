@@ -9,12 +9,12 @@ from django.urls import path
 
 
 urlpatterns = [
-    path("material_cardex_excel/<code>", material_cardex_export_to_excel, name = "material_cardex_excel"),
-    path("product_cardex_excel/<code>", product_cardex_export_to_excel, name = "product_cardex_excel"),
-    path("material_cardex_pdf/<code>", material_cardex_export_to_pdf, name = "material_cardex_pdf"),
+    path("material_cardex_excel/<location__code__color>", material_cardex_export_to_excel, name = "material_cardex_excel"),
+    path("product_cardex_excel/<location__code__color>", product_cardex_export_to_excel, name = "product_cardex_excel"),
+    path("material_cardex_pdf/<location__code__color>", material_cardex_export_to_pdf, name = "material_cardex_pdf"),
     path('api/materials_cardex', MaterialsCardexsViewSet.as_view(), name = 'materials_cardex_api'),
     path("materials/<location__code__color>", add_materials_cardex, name = "materials_cardex"),
-    path("product_cardex_pdf/<code>", product_cardex_export_to_pdf, name = "product_cardex_pdf"),
+    path("product_cardex_pdf/<location__code__color>", product_cardex_export_to_pdf, name = "product_cardex_pdf"),
     path('api/products_cardex', ProductsCardexViewSet.as_view(), name = 'products_cardex_api'),
     path("products/<location__code__color>", add_products_cardex, name = "products_cardex"),
     path("material_list_excel/", material_list_export_to_excel, name = "material_list_excel"),

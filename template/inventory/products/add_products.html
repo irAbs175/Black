@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
 {% endblock %}
 {% block CONTENT %}
+{% if user.is_authenticated %}{% include 'utils/menu.html' %}{% endif %}
 <input type="hidden" name="CODE" value="{{code}}">
     <div class="container-fluid cardexbody">
         <!-- -------کاردکس------ -->
@@ -32,6 +33,7 @@
                             <option selected>انتخاب محل انبار</option>
                             <option value="1">انبار اخلاقی</option>
                             <option value="2">انبار پلاک سه</option>
+                            <option value="3">انبار مغازه غدیر</option>
                         </select>
                     </div>
                     <div class="col-6">
@@ -56,6 +58,7 @@
             </div>
         </div>
     </div>
+<input type="hidden" class="CATEGORY" value="{{user.category}}">
 {% block JS %}
 <script src="{% static 'assets/js/inventory/products/add_products.js' %}"></script>
 {% endblock %}

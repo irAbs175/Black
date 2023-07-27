@@ -36,6 +36,7 @@
                         <th>ردیف</th>
                         <th>تاریخ</th>
                         <th>شماره فاکتور</th>
+                        <th>ردیف فاکتور</th>
                         <th>شرح اقدامات</th>
                         <th>ورودی</th>
                         <th>خروجی</th>
@@ -46,9 +47,10 @@
                 <tbody>
                     {% for data in cardex %}
                     <tr>
-                        <td>{{ data.row }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ data.jpub }}</td>
                         <td>{{ data.factor_number }}</td>
+                        <td>{{ data.factor_row }}</td>
                         <td>{{ data.description }}</td>
                         <td>{% if data.status %}{{ data.number }}{% else %}0{% endif %}</td>
                         <td>{% if data.status %}0{% else %}{{ data.number }}{% endif %}</td>
@@ -63,6 +65,5 @@
         </div>
 {% block JS %}
 <script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>
-<script src="{% static 'assets/js/utils/print_products.js' %}"></script>
 {% endblock %}
 {% endblock %}

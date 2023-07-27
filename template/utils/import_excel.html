@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/materials/add_materials.css' %}">
 {% endblock %}
 {% block CONTENT %}
+{% if user.is_authenticated %}{% include 'utils/menu.html' %}{% endif %}
 {% if status %}
 <script>
 Swal.fire({

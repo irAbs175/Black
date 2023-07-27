@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load my_extras %}
 {% block TITLE %}
 <title>به روز رسانی کالا</title>
 {% endblock %}
@@ -7,11 +8,12 @@
 <link rel="stylesheet" href="{% static 'assets/css/inventory/products/add_products.css' %}">
 {% endblock %}
 {% block CONTENT %}
+{% if user.is_authenticated %}{% include 'utils/menu.html' %}{% endif %}
 <input type="hidden" name="CODE" value="{{key.code}}">
 <div class="container-fluid cardexbody">
             <div class="text-center mb-1">
-            <a href="/inventory/product_cardex_excel/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
-            <a href="/inventory/product_cardex_pdf/{{key.location}}{{key.hall}}{{key.code}}{{key.color}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
+            <a href="/inventory/product_cardex_excel/{{key.location}}^{{key.code}}^{{key.color}}"><button type="button" class="btn btn-success">خروجی EXCEL کاردکس <i class="bi bi-file-earmark-excel-fill"></i></button></a>
+            <a href="/inventory/product_cardex_pdf/{{key.location}}^{{key.code}}^{{key.color}}"><button type="button" class="btn btn-primary">پرینت PAGE کاردکس <i class="bi bi-printer-fill"></i></button></a>
         </div>
     <!-- -------کاردکس------ -->
     <div class="container-fluid"><br>
@@ -35,6 +37,7 @@
                         <th>ردیف</th>
                         <th>تاریخ</th>
                         <th>شماره فاکتور</th>
+                        <th>ردیف فاکتور</th>
                         <th>شرح اقدامات</th>
                         <th>ورودی</th>
                         <th>خروجی</th>
@@ -45,9 +48,10 @@
                 <tbody>
                     {% for data in cardex %}
                     <tr>
-                        <td>{{ data.row }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ data.jpub }}</td>
                         <td>{{ data.factor_number }}</td>
+                        <td>{{ data.factor_row }}</td>
                         <td>{{ data.description }}</td>
                         <td>{% if data.status %}{{ data.number }}{% else %}0{% endif %}</td>
                         <td>{% if data.status %}0{% else %}{{ data.number }}{% endif %}</td>

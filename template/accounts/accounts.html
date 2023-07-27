@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="{% static 'assets/css/accounts/accounts.css' %}">
 {% endblock %}
 {% block CONTENT %}
+{% if user.is_authenticated %}{% include 'utils/menu.html' %}{% endif %}
 <table class="table table-striped text-center">
     <tr>
         <th>نام و نام خانوادگی</th>

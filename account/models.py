@@ -23,6 +23,8 @@ class CustomUserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 
+USER_CATEGORY = ((0, "پرسنل انبار اخلافی"), (1, "پرسنل انبار پلاک ۳"), (2, "پرسنل انبار مغازه غدیر"), (3, "انباردار / حسابدار"), (4, "توسعه / مدیریت"))
+
 class user_accounts(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=120,unique=True, verbose_name='پست الکترونیک')
     first_name = models.CharField(max_length=100, blank=True, null=True, verbose_name='نام')
@@ -34,6 +36,7 @@ class user_accounts(AbstractBaseUser, PermissionsMixin):
     is_inventor = models.BooleanField(default=False, verbose_name='انبار دار')
     is_calculator = models.BooleanField(default=False, verbose_name='حسابدار')
     status = models.BooleanField(null=True, verbose_name='وضعیت')
+    category = models.IntegerField(choices=USER_CATEGORY, default=0, verbose_name='دسته پرسنلی')
     last_activity = models.DateTimeField(null=True, blank=True)
     date_joined = forms.DateTimeField(
         label='Date Joined',
