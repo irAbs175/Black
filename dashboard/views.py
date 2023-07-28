@@ -1,3 +1,4 @@
+from inventory.models import (Products, Materials, ProductsCardex, MaterialsCardex)
 from .forms import (PRODUCTS_IMPORT_EXCEL, MATERIALS_IMPORT_EXCEL)
 from .resources import (ProductsResource, MaterialsResource)
 from django.contrib.auth.decorators import login_required
@@ -16,6 +17,46 @@ import io
 @login_required
 def index(request):
         return render(request, "dashboard/dashboard.html")
+
+@login_required
+def search(request, search):
+    cat = request.user.category
+    if cat == 4:
+        if Products.objects.filter(product_code__contains = search).exists():
+            products = Products.objects.filter(product_code__contains = search).order_by('-product_date')
+        elif Materials.objects.filter(material_code__contains = search).exists():
+            products = Materials.objects.filter(material_code__contains = search).order_by('-material_date')
+        else:
+            products = Products.objects.filter(product_code__contains = search).order_by('-product_date')
+    elif cat == 3:
+        if Products.objects.filter(product_code__contains = search).exists():
+            products = Products.objects.filter(product_code__contains = search).order_by('-product_date')
+        elif Materials.objects.filter(material_code__contains = search).exists():
+            products = Materials.objects.filter(material_code__contains = search).order_by('-material_date')
+        else:
+            products = Products.objects.filter(product_code__contains = search).order_by('-product_date')
+    elif cat == 2:
+        if Products.objects.filter(product_location = 'انبار مغازه غدیر', product_code__contains = search).exists():
+            products = Products.objects.filter(product_location = 'انبار مغازه غدیر', product_code__contains = search).order_by('-product_date')
+        elif Materials.objects.filter(material_location = 'انبار مغازه غدیر', material_code__contains = search).exists():
+            products = Materials.objects.filter(material_location = 'انبار مغازه غدیر', material_code__contains = search).order_by('-material_date')
+        else:
+            products = Products.objects.filter(product_location = 'انبار مغازه غدیر', product_code__contains = search).order_by('-product_date')
+    elif cat == 1:
+        if Products.objects.filter(product_location = 'انبار پلاک سه', product_code__contains = search).exists():
+            products = Products.objects.filter(product_location = 'انبار پلاک سه', product_code__contains = search).order_by('-product_date')
+        elif Materials.objects.filter(material_location = 'انبار پلاک سه', material_code__contains = search).exists():
+            products = Materials.objects.filter(material_location = 'انبار پلاک سه', material_code__contains = search).order_by('-material_date')
+        else:
+            products = Products.objects.filter(product_location = 'انبار پلاک سه', product_code__contains = search).order_by('-product_date')
+    elif cat == 0:
+        if Products.objects.filter(product_location = 'انبار اخلاقی', product_code__contains = search).exists():
+            products = Products.objects.filter(product_location = 'انبار اخلاقی', product_code__contains = search).order_by('-product_date')
+        elif Materials.objects.filter(material_location = 'انبار اخلاقی', material_code__contains = search).exists():
+            products = Materials.objects.filter(material_location = 'انبار اخلاقی', material_code__contains = search).order_by('-material_date')
+        else:
+            products = Products.objects.filter(product_code__contains = search).order_by('-product_date')
+    return render(request, "utils/search.html", {'products': products})
 
 @login_required
 def import_excel(request):
